@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAGxSALES — Grow a Garden 2</title>
+  <style>
+    :root{
+      --bg:#070707;
+      --bg2:#0d0d0d;
+      --card:#131313;
+      --card2:#1a1a1a;
+      --gold:#d4af37;
+      --gold2:#f5d76e;
+      --gold3:#9c7a16;
+      --text:#ffffff;
+      --muted:#b7b7b7;
+      --line:rgba(212,175,55,.18);
+      --danger:#ff5c5c;
+      --success:#63d98f;
+      --radius:22px;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --transition:.25s ease;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(212,175,55,.12), transparent 28%),
+        radial-gradient(circle at top left, rgba(212,175,55,.08), transparent 22%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    button,input{font-family:inherit}
+
+    .container{
+      width:min(1200px,92%);
+      margin:0 auto;
+    }
+
+    .hidden{display:none !important;}
+
+    /* HEADER */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(12px);
+      background:rgba(8,8,8,.88);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      padding:18px 0;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:1.35rem;
+      font-weight:900;
+      letter-spacing:1px;
+      color:var(--gold);
+    }
+
+    .logo-badge{
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #fff6cb, var(--gold));
+      box-shadow:0 0 20px rgba(212,175,55,.45);
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .nav-links a{
+      font-weight:700;
+      transition:var(--transition);
+    }
+
+    .nav-links a:hover{
+      color:var(--gold2);
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:14px 20px;
+      font-weight:800;
+      transition:var(--transition);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--gold),var(--gold3));
+      color:#111;
+      box-shadow:0 12px 30px rgba(212,175,55,.18);
+    }
+
+    .btn-secondary{
+      background:transparent;
+      color:var(--gold2);
+      border:1px solid rgba(212,175,55,.25);
+    }
+
+    .btn-danger{
+      background:#1a1a1a;
+      border:1px solid rgba(255,92,92,.25);
+      color:#ffb1b1;
+    }
+
+    .btn.full{width:100%}
+    .btn.small{padding:10px 14px;font-size:.92rem}
+
+    .cart-pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border-radius:999px;
+      padding:10px 14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--gold2);
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .cart-pill span{
+      min-width:28px;
+      height:28px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,var(--gold),var(--gold3));
+      color:#111;
+      font-weight:900;
+    }
+
+    /* HERO */
+    .hero{
+      min-height:90vh;
+      display:flex;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      right:-140px;
+      top:-140px;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(212,175,55,.16), transparent 68%);
+      filter:blur(8px);
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:34px;
+      align-items:center;
+      padding:70px 0;
+      position:relative;
+      z-index:1;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(212,175,55,.06);
+      color:var(--gold2);
+      font-weight:800;
+      text-transform:uppercase;
+      font-size:.88rem;
+      letter-spacing:.8px;
+      margin-bottom:18px;
+    }
+
+    .live-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 12px rgba(212,175,55,.5);
+    }
+
+    .hero h1{
+      font-size:clamp(2.8rem,6vw,5rem);
+      line-height:1.02;
+      margin-bottom:18px;
+    }
+
+    .hero h1 span{color:var(--gold)}
+
+    .hero p{
+      color:var(--muted);
+      font-size:1.05rem;
+      max-width:720px;
+      line-height:1.7;
+      margin-bottom:28px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:34px;
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .stat-card,.panel,.product-card,.featured-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .stat-card{
+      padding:18px;
+    }
+
+    .stat-card h3{
+      color:var(--gold);
+      margin-bottom:8px;
+      font-size:1.08rem;
+    }
+
+    .stat-card p{
+      color:var(--muted);
+      font-size:.95rem;
+      line-height:1.55;
+    }
+
+    .featured-card{overflow:hidden}
+
+    .featured-image,.product-image{
+      min-height:320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      padding:28px;
+      background:
+        radial-gradient(circle at center, rgba(255,90,40,.42), rgba(255,70,20,.14) 42%, transparent 72%),
+        linear-gradient(180deg,#181818,#101010);
+    }
+
+    .featured-image img,.product-image img{
+      width:220px;
+      object-fit:contain;
+      filter:drop-shadow(0 20px 30px rgba(255,90,0,.28));
+    }
+
+    .stock-badge{
+      position:absolute;
+      top:16px;
+      right:16px;
+      background:linear-gradient(135deg,var(--gold),var(--gold3));
+      color:#111;
+      font-weight:900;
+      font-size:.82rem;
+      border-radius:999px;
+      padding:8px 12px;
+    }
+
+    .featured-body,.product-body{
+      padding:24px;
+    }
+
+    .product-label{
+      color:var(--gold2);
+      text-transform:uppercase;
+      letter-spacing:1.1px;
+      font-size:.78rem;
+      font-weight:800;
+    }
+
+    .featured-body h3,.product-body h3{
+      font-size:1.6rem;
+      margin:10px 0;
+    }
+
+    .featured-body p,.product-body p{
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .featured-footer{
+      margin-top:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .featured-price,.product-price{
+      font-size:1.6rem;
+      font-weight:900;
+      color:var(--gold);
+    }
+
+    /* SECTIONS */
+    section{padding:92px 0}
+
+    .section-head{
+      margin-bottom:28px;
+    }
+
+    .section-head h2{
+      font-size:clamp(2rem,4vw,2.8rem);
+      margin-bottom:10px;
+    }
+
+    .section-head h2 span{color:var(--gold)}
+    .section-head p{color:var(--muted)}
+
+    /* SHOP */
+    .shop-single{
+      display:grid;
+      grid-template-columns:minmax(320px,720px);
+      justify-content:center;
+    }
+
+    .product-meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin:20px 0;
+      flex-wrap:wrap;
+    }
+
+    .qty-box{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      background:#111;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+      min-width:120px;
+      justify-content:space-between;
+    }
+
+    .qty-btn{
+      border:none;
+      background:transparent;
+      color:#fff;
+      cursor:pointer;
+      font-size:1.15rem;
+      width:28px;
+      height:28px;
+    }
+
+    .qty-value{font-weight:800}
+
+    /* ORDER + CHAT */
+    .order-layout,.contact-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+    }
+
+    .panel{padding:24px}
+
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .panel-head h3,.contact-panel h3{
+      color:var(--gold);
+      font-size:1.3rem;
+    }
+
+    .order-empty,.chat-locked,.empty-state{
+      border:1px dashed rgba(212,175,55,.22);
+      border-radius:18px;
+      padding:22px;
+      background:rgba(212,175,55,.03);
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .order-card{
+      display:grid;
+      gap:16px;
+    }
+
+    .order-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .order-id{
+      color:var(--gold);
+      font-size:1.2rem;
+      font-weight:900;
+    }
+
+    .order-sub{
+      color:var(--muted);
+      font-size:.95rem;
+      margin-top:4px;
+    }
+
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:.9rem;
+      white-space:nowrap;
+    }
+
+    .status-waiting{
+      background:rgba(212,175,55,.12);
+      color:var(--gold2);
+      border:1px solid rgba(212,175,55,.26);
+    }
+
+    .order-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .order-info-box{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(212,175,55,.12);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .order-info-box h4{
+      color:var(--gold2);
+      margin-bottom:6px;
+      font-size:.95rem;
+    }
+
+    .order-info-box p{
+      color:#fff;
+      font-weight:700;
+      line-height:1.5;
+    }
+
+    .order-product{
+      display:grid;
+      grid-template-columns:80px 1fr;
+      gap:16px;
+      align-items:center;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(212,175,55,.12);
+      border-radius:20px;
+      padding:16px;
+    }
+
+    .order-product-thumb,.cart-thumb{
+      width:80px;
+      height:80px;
+      border-radius:18px;
+      background:
+        radial-gradient(circle at center, rgba(255,90,40,.42), rgba(255,70,20,.14) 42%, transparent 72%),
+        linear-gradient(180deg,#181818,#101010);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px;
+    }
+
+    .order-product-thumb img,.cart-thumb img{
+      width:54px;
+      object-fit:contain;
+    }
+
+    .chat-app{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .chat-messages{
+      height:420px;
+      overflow:auto;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding:10px;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(212,175,55,.1);
+      border-radius:20px;
+    }
+
+    .chat-message{
+      max-width:82%;
+      padding:12px 14px;
+      border-radius:16px;
+      line-height:1.45;
+    }
+
+    .chat-message.customer{
+      align-self:flex-end;
+      background:linear-gradient(135deg,var(--gold),var(--gold3));
+      color:#111;
+      font-weight:700;
+    }
+
+    .chat-message.system{
+      align-self:flex-start;
+      background:#161616;
+      border:1px solid rgba(212,175,55,.1);
+      color:#fff;
+    }
+
+    .chat-meta{
+      font-size:.78rem;
+      opacity:.8;
+      margin-top:6px;
+    }
+
+    .chat-input-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+    }
+
+    .chat-input-row input,.checkout-form input{
+      background:#111;
+      border:1px solid var(--line);
+      color:#fff;
+      border-radius:16px;
+      padding:14px 16px;
+      outline:none;
+    }
+
+    /* CONTACT */
+    .contact-item,.info-item{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(212,175,55,.12);
+      border-radius:18px;
+      padding:16px;
+      margin-bottom:14px;
+    }
+
+    .contact-item h4{
+      color:var(--gold2);
+      margin-bottom:6px;
+    }
+
+    .contact-item p,.contact-item a{
+      color:var(--muted);
+      word-break:break-word;
+    }
+
+    .contact-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .info-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .info-item{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .info-item strong{color:var(--gold)}
+
+    /* CART */
+    .cart-overlay,.modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.58);
+      opacity:0;
+      visibility:hidden;
+      transition:var(--transition);
+      z-index:1200;
+    }
+
+    .cart-overlay.show,.modal-overlay.show{
+      opacity:1;
+      visibility:visible;
+    }
+
+    .cart-sidebar{
+      position:fixed;
+      top:0;
+      right:0;
+      width:min(430px,100%);
+      height:100vh;
+      background:linear-gradient(180deg,#111,#0c0c0c);
+      border-left:1px solid var(--line);
+      z-index:1300;
+      transform:translateX(100%);
+      transition:var(--transition);
+      display:flex;
+      flex-direction:column;
+      box-shadow:-12px 0 40px rgba(0,0,0,.35);
+    }
+
+    .cart-sidebar.show{transform:translateX(0)}
+
+    .cart-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:20px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .cart-header h3{color:var(--gold)}
+
+    .icon-btn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:#fff;
+      cursor:pointer;
+      transition:var(--transition);
+    }
+
+    .icon-btn:hover{
+      background:rgba(212,175,55,.06);
+      color:var(--gold2);
+    }
+
+    .cart-items{
+      flex:1;
+      overflow:auto;
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .cart-item{
+      display:grid;
+      grid-template-columns:72px 1fr auto;
+      gap:14px;
+      align-items:center;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(212,175,55,.10);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .cart-thumb{
+      width:72px;
+      height:72px;
+    }
+
+    .cart-thumb img{width:46px}
+
+    .cart-info h4{margin-bottom:4px}
+    .cart-info p{
+      color:var(--muted);
+      font-size:.92rem;
+      margin-bottom:8px;
+    }
+
+    .cart-controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .mini-btn{
+      width:30px;
+      height:30px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#111;
+      color:#fff;
+      cursor:pointer;
+    }
+
+    .remove-btn{
+      border:none;
+      background:transparent;
+      color:var(--danger);
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .cart-price{
+      color:var(--gold);
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .cart-footer{
+      border-top:1px solid var(--line);
+      padding:20px;
+      display:grid;
+      gap:14px;
+    }
+
+    .cart-summary-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .cart-summary-row strong{
+      color:var(--gold);
+      font-size:1.2rem;
+    }
+
+    .small-note{
+      color:var(--muted);
+      font-size:.93rem;
+      line-height:1.6;
+    }
+
+    /* CHECKOUT */
+    .checkout-modal{
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%) scale(.96);
+      width:min(920px,94%);
+      background:linear-gradient(180deg,#121212,#0d0d0d);
+      border:1px solid var(--line);
+      border-radius:28px;
+      z-index:1400;
+      box-shadow:0 30px 60px rgba(0,0,0,.45);
+      opacity:0;
+      visibility:hidden;
+      transition:var(--transition);
+    }
+
+    .checkout-modal.show{
+      opacity:1;
+      visibility:visible;
+      transform:translate(-50%,-50%) scale(1);
+    }
+
+    .checkout-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:22px 24px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .checkout-header h3{
+      color:var(--gold);
+      font-size:1.4rem;
+    }
+
+    .checkout-body{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+      padding:24px;
+    }
+
+    .checkout-form,.checkout-summary{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(212,175,55,.10);
+      border-radius:22px;
+      padding:22px;
+    }
+
+    .checkout-form h4,.checkout-summary h4{
+      color:var(--gold);
+      margin-bottom:16px;
+    }
+
+    .checkout-form label{
+      display:block;
+      margin-bottom:8px;
+      color:var(--gold2);
+      font-size:.95rem;
+      font-weight:700;
+    }
+
+    .checkout-form input{
+      width:100%;
+      margin-bottom:16px;
+    }
+
+    .summary-box{
+      display:grid;
+      gap:14px;
+    }
+
+    .summary-line{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      color:var(--muted);
+    }
+
+    .summary-line strong{color:#fff}
+
+    .summary-total{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:1.1rem;
+    }
+
+    .summary-total strong{color:var(--gold)}
+
+    /* TOAST */
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:2000;
+      min-width:280px;
+      max-width:92vw;
+      background:#101010;
+      border:1px solid rgba(212,175,55,.3);
+      color:#fff;
+      border-radius:18px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      transform:translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      transition:.3s ease;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    .toast strong{
+      color:var(--gold);
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .toast p{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    footer{
+      padding:30px 0 42px;
+      border-top:1px solid var(--line);
+      text-align:center;
+      color:var(--muted);
+      background:rgba(0,0,0,.16);
+    }
+
+    footer span{
+      color:var(--gold);
+      font-weight:800;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:1100px){
+      .hero-grid,
+      .order-layout,
+      .contact-grid,
+      .checkout-body{
+        grid-template-columns:1fr;
+      }
+      .hero{min-height:auto}
+      .hero-stats{grid-template-columns:1fr}
+    }
+
+    @media (max-width:760px){
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav-right{
+        width:100%;
+        justify-content:space-between;
+      }
+
+      .nav-links{gap:14px}
+      .featured-footer,.product-meta,.contact-actions{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .order-grid{grid-template-columns:1fr}
+      .chat-input-row{grid-template-columns:1fr}
+      .cart-sidebar{width:100%}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <strong>Succes</strong>
+    <p id="toastText">Actie voltooid.</p>
+  </div>
+
+  <!-- CHECKOUT OVERLAY -->
+  <div class="modal-overlay" id="checkoutOverlay"></div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="checkout-modal" id="checkoutModal">
+    <div class="checkout-header">
+      <h3>Checkout</h3>
+      <button id="closeCheckout" class="icon-btn">✕</button>
+    </div>
+
+    <div class="checkout-body">
+      <div class="checkout-form">
+        <h4>Klantgegevens</h4>
+
+        <label>Roblox username</label>
+        <input type="text" id="robloxUsername" placeholder="Bijv. MyRobloxUser123" />
+
+        <label>Voornaam</label>
+        <input type="text" id="firstName" placeholder="Je voornaam" />
+
+        <label>Achternaam</label>
+        <input type="text" id="lastName" placeholder="Je achternaam" />
+
+        <button class="btn btn-primary full" id="confirmCheckoutBtn">Doorgaan naar Tikkie</button>
+      </div>
+
+      <div class="checkout-summary">
+        <h4>Bestelling</h4>
+        <div id="checkoutSummaryBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART OVERLAY -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- CART -->
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Winkelwagen</h3>
+      <button class="icon-btn" id="cartClose">✕</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <div class="empty-state">Je winkelwagen is nog leeg.</div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>Totaal</span>
+        <strong id="cartTotal">€ 0,00</strong>
+      </div>
+      <button class="btn btn-primary full" id="checkoutBtn">Betalen</button>
+      <p class="small-note">
+        Je vult eerst je Roblox username, voornaam en achternaam in en gaat daarna naar Tikkie.
+      </p>
+    </div>
+  </aside>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="#home" class="logo">
+        <span class="logo-badge"></span>
+        GAGxSALES
+      </a>
+
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#shop">Shop</a>
+          <a href="#orders">My Order</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="cart-pill" id="cartOpenBtn">
+          Cart
+          <span id="cartCount">0</span>
+        </button>
+
+        <a class="btn btn-primary" href="https://discord.gg/rz2BjUqb2c" target="_blank">Join Discord</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">
+          <span class="live-dot"></span>
+          Grow a Garden 2 premium store
+        </div>
+
+        <h1>
+          Buy your <span>Ghost Pepper Seed</span> on GAGxSALES
+        </h1>
+
+        <p>
+          GAGxSALES is a premium styled Grow a Garden 2 shop with a custom gold/black design,
+          Ghost Pepper Seed checkout, Tikkie payment flow, personal order overview and a private customer chat section.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#shop" class="btn btn-primary">Shop now</a>
+          <a href="#orders" class="btn btn-secondary">View my order</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <h3>1 Premium Product</h3>
+            <p>Focused store layout with one main featured product: Ghost Pepper Seed.</p>
+          </div>
+          <div class="stat-card">
+            <h3>Order Dashboard</h3>
+            <p>Customers can review their order details directly on the website after checkout.</p>
+          </div>
+          <div class="stat-card">
+            <h3>Tikkie Checkout</h3>
+            <p>Fast payment redirect to your Tikkie payment page after placing the order.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="featured-card">
+          <div class="featured-image">
+            <span class="stock-badge">In stock</span>
+            <img src="https://cdn-icons-png.flaticon.com/512/766/766212.png" alt="Ghost Pepper Seed">
+          </div>
+
+          <div class="featured-body">
+            <span class="product-label">Grow a Garden 2</span>
+            <h3>Ghost Pepper Seed</h3>
+            <p>
+              The featured GAGxSALES item. Premium storefront styling, quick checkout and room for future upgrades.
+            </p>
+
+            <div class="featured-footer">
+              <div class="featured-price">€ 0,99</div>
+              <a href="#shop" class="btn btn-primary">Buy now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section id="shop">
+    <div class="container">
+      <div class="section-head">
+        <h2>Shop <span>Ghost Pepper Seed</span></h2>
+        <p>Only one featured listing for a cleaner premium store look.</p>
+      </div>
+
+      <div class="shop-single">
+        <article
+          class="product-card"
+          data-id="ghost-pepper"
+          data-name="Ghost Pepper Seed"
+          data-price="0.99"
+          data-image="https://cdn-icons-png.flaticon.com/512/766/766212.png"
+        >
+          <div class="product-image">
+            <span class="stock-badge">46 in stock</span>
+            <img src="https://cdn-icons-png.flaticon.com/512/766/766212.png" alt="Ghost Pepper Seed">
+          </div>
+
+          <div class="product-body">
+            <span class="product-label">Grow a Garden 2</span>
+            <h3>Ghost Pepper Seed</h3>
+            <p>
+              A premium featured listing for Grow a Garden 2. This is the main product inside the GAGxSALES shop.
+            </p>
+
+            <div class="product-meta">
+              <div class="product-price">€ 0,99</div>
+
+              <div class="qty-box">
+                <button class="qty-btn" data-role="minus">−</button>
+                <span class="qty-value">1</span>
+                <button class="qty-btn" data-role="plus">+</button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary full add-cart-btn">Add to cart</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section id="orders">
+    <div class="container">
+      <div class="section-head">
+        <h2>My <span>Order</span></h2>
+        <p>
+          After checkout, your latest order appears here with order details, status and your personal order chat section.
+        </p>
+      </div>
+
+      <div class="order-layout">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Latest order</h3>
+            <button class="btn btn-secondary small" id="loadLatestOrderBtn">Load latest order</button>
+          </div>
+
+          <div id="orderContent" class="order-empty">
+            No order found yet. Place an order first to see it here.
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Order chat</h3>
+          </div>
+
+          <div id="chatLockedState" class="chat-locked">
+            Place an order first to unlock your order chat.
+          </div>
+
+          <div id="chatApp" class="chat-app hidden">
+            <div id="chatMessages" class="chat-messages"></div>
+
+            <div class="chat-input-row">
+              <input type="text" id="chatInput" placeholder="Type a message about your order..." />
+              <button class="btn btn-primary" id="sendChatBtn">Send</button>
+            </div>
+
+            <p class="small-note">
+              Let op: in deze V4 Ultimate wordt de chat lokaal in de browser opgeslagen.
+              Als je wilt dat jij en de klant echt live privé kunnen chatten op de site,
+              dan moet ik in de volgende versie een echte online database/chat maken.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2>Contact <span>GAGxSALES</span></h2>
+        <p>Gebruik Discord of Snapchat voor support, updates en vragen over je bestelling.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="panel contact-panel">
+          <h3>Contact options</h3>
+
+          <div class="contact-item">
+            <h4>Discord server</h4>
+            <a href="https://discord.gg/rz2BjUqb2c" target="_blank">discord.gg/rz2BjUqb2c</a>
+          </div>
+
+          <div class="contact-item">
+            <h4>Snapchat</h4>
+            <p>@oncexslaes1</p>
+          </div>
+
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="https://discord.gg/rz2BjUqb2c" target="_blank">Join Discord</a>
+            <a class="btn btn-secondary" href="https://www.snapchat.com/add/oncexslaes1" target="_blank">Open Snapchat</a>
+          </div>
+        </div>
+
+        <div class="panel contact-panel">
+          <h3>How orders work</h3>
+
+          <div class="info-list">
+            <div class="info-item"><strong>1.</strong>Voeg Ghost Pepper Seed toe aan je winkelwagen.</div>
+            <div class="info-item"><strong>2.</strong>Vul je Roblox username, voornaam en achternaam in.</div>
+            <div class="info-item"><strong>3.</strong>Klik door naar Tikkie om te betalen.</div>
+            <div class="info-item"><strong>4.</strong>Ga terug naar My Order om je order en chat te zien.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2026 <span>GAGxSALES</span> — Grow a Garden 2 marketplace
+    </div>
+  </footer>
+
+  <script>
+    const TIKKIE_URL = "https://tikkie.me/pay/u87eq681egq8c9l0m25l";
+    const STORAGE_CART_KEY = "gagxsales_cart_v4";
+    const STORAGE_ORDERS_KEY = "gagxsales_orders_v4";
+    const STORAGE_LAST_ORDER_KEY = "gagxsales_last_order_v4";
+
+    const cartSidebar = document.getElementById("cartSidebar");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const cartOpenBtn = document.getElementById("cartOpenBtn");
+    const cartClose = document.getElementById("cartClose");
+    const cartItemsEl = document.getElementById("cartItems");
+    const cartTotalEl = document.getElementById("cartTotal");
+    const cartCountEl = document.getElementById("cartCount");
+
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    const checkoutOverlay = document.getElementById("checkoutOverlay");
+    const checkoutModal = document.getElementById("checkoutModal");
+    const closeCheckout = document.getElementById("closeCheckout");
+    const confirmCheckoutBtn = document.getElementById("confirmCheckoutBtn");
+    const checkoutSummaryBox = document.getElementById("checkoutSummaryBox");
+
+    const robloxUsernameInput = document.getElementById("robloxUsername");
+    const firstNameInput = document.getElementById("firstName");
+    const lastNameInput = document.getElementById("lastName");
+
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+
+    const orderContent = document.getElementById("orderContent");
+    const loadLatestOrderBtn = document.getElementById("loadLatestOrderBtn");
+
+    const chatLockedState = document.getElementById("chatLockedState");
+    const chatApp = document.getElementById("chatApp");
+    const chatMessages = document.getElementById("chatMessages");
+    const chatInput = document.getElementById("chatInput");
+    const sendChatBtn = document.getElementById("sendChatBtn");
+
+    let cart = loadCart();
+    let activeOrder = null;
+
+    function showToast(message){
+      toastText.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+
+    function formatPrice(value){
+      return "€ " + Number(value).toFixed(2).replace(".", ",");
+    }
+
+    function formatDate(dateString){
+      return new Date(dateString).toLocaleString("nl-NL");
+    }
+
+    function generateOrderId(){
+      return "GAG-" + Math.floor(10000 + Math.random() * 90000);
+    }
+
+    function getChatStorageKey(orderId){
+      return "gagxsales_chat_" + orderId;
+    }
+
+    function saveCart(){
+      localStorage.setItem(STORAGE_CART_KEY, JSON.stringify(cart));
+    }
+
+    function loadCart(){
+      const raw = localStorage.getItem(STORAGE_CART_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }
+
+    function loadOrders(){
+      const raw = localStorage.getItem(STORAGE_ORDERS_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }
+
+    function saveOrders(orders){
+      localStorage.setItem(STORAGE_ORDERS_KEY, JSON.stringify(orders));
+    }
+
+    function saveLastOrderId(orderId){
+      localStorage.setItem(STORAGE_LAST_ORDER_KEY, orderId);
+    }
+
+    function loadLastOrderId(){
+      return localStorage.getItem(STORAGE_LAST_ORDER_KEY);
+    }
+
+    function getTotalCount(){
+      return Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function getTotalPrice(){
+      return Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+
+    function updateCartBadge(){
+      cartCountEl.textContent = getTotalCount();
+    }
+
+    function openCart(){
+      cartSidebar.classList.add("show");
+      cartOverlay.classList.add("show");
+    }
+
+    function closeCartSidebar(){
+      cartSidebar.classList.remove("show");
+      cartOverlay.classList.remove("show");
+    }
+
+    function addToCart(product, quantity){
+      if(!cart[product.id]){
+        cart[product.id] = { ...product, quantity: 0 };
+      }
+
+      cart[product.id].quantity += quantity;
+      saveCart();
+      updateCartBadge();
+      renderCart();
+      showToast(quantity + "x " + product.name + " toegevoegd aan winkelwagen.");
+    }
+
+    function changeCartQty(productId, delta){
+      if(!cart[productId]) return;
+
+      cart[productId].quantity += delta;
+      if(cart[productId].quantity <= 0){
+        delete cart[productId];
+      }
+
+      saveCart();
+      updateCartBadge();
+      renderCart();
+    }
+
+    function removeFromCart(productId){
+      if(cart[productId]){
+        delete cart[productId];
+        saveCart();
+        updateCartBadge();
+        renderCart();
+      }
+    }
+
+    function renderCart(){
+      const items = Object.values(cart);
+
+      if(items.length === 0){
+        cartItemsEl.innerHTML = '<div class="empty-state">Je winkelwagen is nog leeg.</div>';
+        cartTotalEl.textContent = formatPrice(0);
+        return;
+      }
+
+      cartItemsEl.innerHTML = items.map(item => `
+        <div class="cart-item">
+          <div class="cart-thumb">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+
+          <div class="cart-info">
+            <h4>${item.name}</h4>
+            <p>${formatPrice(item.price)} per stuk</p>
+
+            <div class="cart-controls">
+              <button class="mini-btn" data-cart-action="minus" data-id="${item.id}">−</button>
+              <span>${item.quantity}</span>
+              <button class="mini-btn" data-cart-action="plus" data-id="${item.id}">+</button>
+              <button class="remove-btn" data-cart-action="remove" data-id="${item.id}">Verwijder</button>
+            </div>
+          </div>
+
+          <div class="cart-price">${formatPrice(item.price * item.quantity)}</div>
+        </div>
+      `).join("");
+
+      cartTotalEl.textContent = formatPrice(getTotalPrice());
+
+      cartItemsEl.querySelectorAll("[data-cart-action]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const action = btn.dataset.cartAction;
+          const id = btn.dataset.id;
+
+          if(action === "minus") changeCartQty(id, -1);
+          if(action === "plus") changeCartQty(id, 1);
+          if(action === "remove") removeFromCart(id);
+        });
+      });
+    }
+
+    function renderCheckoutSummary(){
+      const items = Object.values(cart);
+
+      if(items.length === 0){
+        checkoutSummaryBox.innerHTML = '<div class="empty-state">Geen producten in je winkelwagen.</div>';
+        return;
+      }
+
+      checkoutSummaryBox.innerHTML = `
+        <div class="summary-box">
+          ${items.map(item => `
+            <div class="summary-line">
+              <span>${item.name} x${item.quantity}</span>
+              <strong>${formatPrice(item.price * item.quantity)}</strong>
+            </div>
+          `).join("")}
+
+          <div class="summary-total">
+            <span>Totaal</span>
+            <strong>${formatPrice(getTotalPrice())}</strong>
+          </div>
+        </div>
+      `;
+    }
+
+    function openCheckoutModal(){
+      if(Object.values(cart).length === 0){
+        showToast("Je winkelwagen is leeg.");
+        return;
+      }
+
+      renderCheckoutSummary();
+      checkoutOverlay.classList.add("show");
+      checkoutModal.classList.add("show");
+    }
+
+    function closeCheckoutModal(){
+      checkoutOverlay.classList.remove("show");
+      checkoutModal.classList.remove("show");
+    }
+
+    function createOrder(){
+      const robloxUsername = robloxUsernameInput.value.trim();
+      const firstName = firstNameInput.value.trim();
+      const lastName = lastNameInput.value.trim();
+
+      if(!robloxUsername || !firstName || !lastName){
+        showToast("Vul Roblox username, voornaam en achternaam in.");
+        return null;
+      }
+
+      const items = Object.values(cart);
+      if(items.length === 0){
+        showToast("Je winkelwagen is leeg.");
+        return null;
+      }
+
+      const order = {
+        id: generateOrderId(),
+        createdAt: new Date().toISOString(),
+        status: "Waiting for payment",
+        robloxUsername,
+        firstName,
+        lastName,
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        })),
+        total: getTotalPrice()
+      };
+
+      const orders = loadOrders();
+      orders.unshift(order);
+      saveOrders(orders);
+      saveLastOrderId(order.id);
+
+      const initialChat = [
+        {
+          type: "system",
+          text: "Order " + order.id + " aangemaakt. Gebruik deze chat voor vragen over je bestelling.",
+          createdAt: new Date().toISOString()
+        }
+      ];
+      localStorage.setItem(getChatStorageKey(order.id), JSON.stringify(initialChat));
+
+      cart = {};
+      saveCart();
+      updateCartBadge();
+      renderCart();
+
+      activeOrder = order;
+      renderOrder(order);
+      loadChat(order.id);
+
+      return order;
+    }
+
+    function renderOrder(order){
+      if(!order){
+        orderContent.innerHTML = "No order found yet. Place an order first to see it here.";
+        chatLockedState.classList.remove("hidden");
+        chatApp.classList.add("hidden");
+        activeOrder = null;
+        return;
+      }
+
+      activeOrder = order;
+      const firstItem = order.items[0];
+
+      orderContent.innerHTML = `
+        <div class="order-card">
+          <div class="order-top">
+            <div>
+              <div class="order-id">${order.id}</div>
+              <div class="order-sub">Created on ${formatDate(order.createdAt)}</div>
+            </div>
+            <div class="status-badge status-waiting">${order.status}</div>
+          </div>
+
+          <div class="order-product">
+            <div class="order-product-thumb">
+              <img src="${firstItem.image}" alt="${firstItem.name}">
+            </div>
+            <div>
+              <h4>${firstItem.name}</h4>
+              <p>${firstItem.quantity}x besteld — ${formatPrice(firstItem.price)} per stuk</p>
+            </div>
+          </div>
+
+          <div class="order-grid">
+            <div class="order-info-box">
+              <h4>Roblox username</h4>
+              <p>${order.robloxUsername}</p>
+            </div>
+
+            <div class="order-info-box">
+              <h4>Klantnaam</h4>
+              <p>${order.firstName} ${order.lastName}</p>
+            </div>
+
+            <div class="order-info-box">
+              <h4>Aantal</h4>
+              <p>${firstItem.quantity}</p>
+            </div>
+
+            <div class="order-info-box">
+              <h4>Totaal</h4>
+              <p>${formatPrice(order.total)}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      chatLockedState.classList.add("hidden");
+      chatApp.classList.remove("hidden");
+    }
+
+    function loadLatestOrder(){
+      const lastOrderId = loadLastOrderId();
+      if(!lastOrderId){
+        renderOrder(null);
+        return;
+      }
+
+      const orders = loadOrders();
+      const order = orders.find(o => o.id === lastOrderId);
+
+      if(order){
+        renderOrder(order);
+        loadChat(order.id);
+      } else {
+        renderOrder(null);
+      }
+    }
+
+    function loadChat(orderId){
+      const raw = localStorage.getItem(getChatStorageKey(orderId));
+      const messages = raw ? JSON.parse(raw) : [];
+      renderChatMessages(messages);
+    }
+
+    function saveChat(orderId, messages){
+      localStorage.setItem(getChatStorageKey(orderId), JSON.stringify(messages));
+    }
+
+    function renderChatMessages(messages){
+      if(messages.length === 0){
+        chatMessages.innerHTML = '<div class="empty-state">Nog geen berichten in deze chat.</div>';
+        return;
+      }
+
+      chatMessages.innerHTML = messages.map(msg => `
+        <div class="chat-message ${msg.type}">
+          <div>${msg.text}</div>
+          <div class="chat-meta">${formatDate(msg.createdAt)}</div>
+        </div>
+      `).join("");
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendChatMessage(){
+      if(!activeOrder){
+        showToast("Er is nog geen actieve order.");
+        return;
+      }
+
+      const text = chatInput.value.trim();
+      if(!text) return;
+
+      const raw = localStorage.getItem(getChatStorageKey(activeOrder.id));
+      const messages = raw ? JSON.parse(raw) : [];
+
+      messages.push({
+        type: "customer",
+        text,
+        createdAt: new Date().toISOString()
+      });
+
+      saveChat(activeOrder.id, messages);
+      renderChatMessages(messages);
+      chatInput.value = "";
+    }
+
+    function initProductCard(){
+      const card = document.querySelector(".product-card");
+      if(!card) return;
+
+      let qty = 1;
+      const qtyValue = card.querySelector(".qty-value");
+      const minus = card.querySelector('[data-role="minus"]');
+      const plus = card.querySelector('[data-role="plus"]');
+      const addBtn = card.querySelector(".add-cart-btn");
+
+      minus.addEventListener("click", () => {
+        if(qty > 1){
+          qty--;
+          qtyValue.textContent = qty;
+        }
+      });
+
+      plus.addEventListener("click", () => {
+        qty++;
+        qtyValue.textContent = qty;
+      });
+
+      addBtn.addEventListener("click", () => {
+        const product = {
+          id: card.dataset.id,
+          name: card.dataset.name,
+          price: parseFloat(card.dataset.price),
+          image: card.dataset.image
+        };
+
+        addToCart(product, qty);
+        openCart();
+      });
+    }
+
+    cartOpenBtn.addEventListener("click", openCart);
+    cartClose.addEventListener("click", closeCartSidebar);
+    cartOverlay.addEventListener("click", closeCartSidebar);
+
+    checkoutBtn.addEventListener("click", openCheckoutModal);
+    closeCheckout.addEventListener("click", closeCheckoutModal);
+    checkoutOverlay.addEventListener("click", closeCheckoutModal);
+
+    confirmCheckoutBtn.addEventListener("click", () => {
+      const order = createOrder();
+      if(!order) return;
+
+      closeCheckoutModal();
+      showToast("Order " + order.id + " aangemaakt. Je wordt doorgestuurd naar Tikkie.");
+
+      setTimeout(() => {
+        window.open(TIKKIE_URL, "_blank");
+        window.location.hash = "orders";
+      }, 700);
+    });
+
+    loadLatestOrderBtn.addEventListener("click", loadLatestOrder);
+    sendChatBtn.addEventListener("click", sendChatMessage);
+
+    chatInput.addEventListener("keydown", (e) => {
+      if(e.key === "Enter"){
+        sendChatMessage();
+      }
+    });
+
+    updateCartBadge();
+    renderCart();
+    initProductCard();
+    loadLatestOrder();
+  </script>
+</body>
+</html>
