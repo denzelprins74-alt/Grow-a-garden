@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GAGxSALES V9 Premium</title>
+<style>
+:root{
+  --bg:#070707;--bg2:#0f0f0f;--panel:#111111;--panel2:#171717;--line:#2b2b2b;
+  --gold:#f6c54f;--gold2:#ffe08a;--text:#f6f6f6;--muted:#a9a9a9;
+  --green:#5be18f;--red:#ff6b6b;
+  --ghost:#ff5b45;--ghost2:#7d120b;--bamboo:#38d66b;--bamboo2:#0d5d28;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);font-family:Inter,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(246,197,79,.12), transparent 28%),
+    linear-gradient(180deg,#060606,#0b0b0b 30%,#101010 100%);
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 22px}
+header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(7,7,7,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.06)
+}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:16px;flex-wrap:wrap}
+.logo{font-size:1.7rem;font-weight:1000;letter-spacing:.5px;color:var(--gold);text-shadow:0 0 18px rgba(246,197,79,.18)}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn,.pill,input,textarea{
+  border:1px solid var(--line);border-radius:14px;background:var(--panel2);color:#fff
+}
+.btn{padding:12px 16px;font-weight:800;cursor:pointer;transition:.18s transform,.18s opacity,.18s border-color}
+.btn:hover{transform:translateY(-1px)}
+.btn.gold{
+  background:linear-gradient(135deg,#4f3a09,#201704);
+  border-color:#6f5412;color:#ffec9f;
+  box-shadow:0 12px 28px rgba(246,197,79,.08), inset 0 1px 0 rgba(255,255,255,.06)
+}
+.btn.dark{background:#141414}
+.btn.red{background:linear-gradient(135deg,#431212,#240909);border-color:#6e2020}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.pill{padding:11px 14px;font-weight:900}
+.online-pill{border-color:rgba(91,225,143,.35)}
+.offline-pill{border-color:rgba(255,107,107,.35)}
+.section{padding:26px 0}
+.panel{
+  background:linear-gradient(180deg,#111,#0e0e0e);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:24px;padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.25)
+}
+.hero{padding:26px 0 12px}
+.hero-grid{display:grid;grid-template-columns:1.2fr .9fr;gap:18px}
+.hero h1{margin:0 0 10px;font-size:2.4rem}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{overflow:hidden}
+.top{
+  position:relative;min-height:290px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;padding:26px;overflow:hidden
+}
+.stock{
+  position:absolute;top:14px;right:14px;padding:10px 14px;border-radius:999px;
+  font-weight:900;font-size:.95rem;background:#1ce0c2;color:#061514
+}
+.seed{
+  width:220px;height:220px;border-radius:32px;
+  clip-path:polygon(50% 0,71% 14%,89% 40%,79% 78%,50% 100%,21% 78%,11% 40%,29% 14%);
+  filter:drop-shadow(0 26px 50px rgba(0,0,0,.38));
+}
+.seed.ghost{background:radial-gradient(circle at 40% 35%,#ff9c8e 0,#ff5b45 28%,#ba1b12 58%,#65100b 100%)}
+.seed.gold{background:radial-gradient(circle at 40% 35%,#fff2b0 0,#ffd85b 28%,#d29d00 60%,#6f5000 100%)}
+.seed.bamboo{background:radial-gradient(circle at 40% 35%,#d4ffd8 0,#59ff8d 28%,#1fa44a 60%,#0b4d1f 100%)}
+.card h3{margin:8px 0 8px;font-size:1.25rem}
+.price{font-size:1.1rem;font-weight:900}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{
+  width:38px;height:38px;border-radius:12px;border:1px solid var(--line);
+  background:#121212;color:#fff;font-size:18px;cursor:pointer
+}
+.qty span{min-width:20px;text-align:center;font-weight:900}
+.small{font-size:.92rem}
+.list-card,.order-card,.checkout-item{
+  background:#101010;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:14px
+}
+.auth-backdrop,.cart-backdrop,.checkout-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:120;padding:20px
+}
+.modal{
+  width:min(720px,100%);max-height:90vh;overflow:auto;background:linear-gradient(180deg,#131313,#0d0d0d);
+  border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:20px
+}
+.cart-side{
+  position:fixed;top:0;right:-460px;width:min(440px,100%);height:100vh;z-index:125;
+  background:linear-gradient(180deg,#111,#0d0d0d);border-left:1px solid rgba(255,255,255,.08);
+  box-shadow:-20px 0 50px rgba(0,0,0,.4);transition:right .24s ease;padding:18px;overflow:auto
+}
+.cart-side.open{right:0}
+input,textarea{width:100%;padding:13px 14px;background:#121212}
+label{display:block;margin:0 0 12px}
+.chat-box{height:280px;overflow:auto;background:#0d0d0d;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:12px}
+.msg{max-width:82%;padding:11px 12px;border-radius:14px;margin:8px 0}
+.msg.me{margin-left:auto;background:#2b220f}
+.msg.admin{background:#171717}
+.notice{
+  position:fixed;right:18px;bottom:18px;z-index:140;display:none;
+  background:#121212;border:1px solid rgba(255,255,255,.08);padding:14px 16px;border-radius:16px
+}
+.hide{display:none!important}
+hr{border:none;border-top:1px solid rgba(255,255,255,.07);margin:14px 0}
+@media(max-width:1100px){
+  .grid{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="row">
+      <div class="logo">GAGxSALES</div>
+      <div class="pill online-pill" id="statusPill"><span id="statusPillText">🟢 ONLINE</span></div>
+    </div>
+    <div class="row">
+      <button class="btn dark" onclick="scrollToId('shop')">Shop</button>
+      <button class="btn dark" onclick="scrollToId('orders')">Mijn orders</button>
+      <button class="btn dark" onclick="scrollToId('contact')">Contact</button>
+      <button class="btn gold" onclick="openCart()">🛒 Winkelwagen (<span id="cartCount">0</span>)</button>
+      <button class="btn" id="loginBtn" onclick="openAuth()">Inloggen</button>
+      <button class="btn gold hide" id="ownerBtn" onclick="toggleOwnerPanel()">Owner panel</button>
+      <button class="btn hide" id="logoutBtn" onclick="logout()">Uitloggen</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <div class="hero-grid">
+    <div class="panel">
+      <div class="small muted">Grow a Garden 2 store</div>
+      <h1>Premium seeds, snelle levering en privé order-chat.</h1>
+      <div class="muted" id="statusBannerText">De shop staat nu <strong>online</strong>. Je kunt bestellen via de winkelwagen en daarna betalen met Tikkie.</div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn gold" onclick="scrollToId('shop')">Bekijk shop</button>
+        <button class="btn dark" onclick="openCart()">Open winkelwagen</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="font-weight:900;font-size:1.15rem;margin-bottom:8px">Hoe het werkt</div>
+      <div class="muted">1. Log in met je e-mail<br>2. Voeg meerdere seeds toe aan je winkelwagen<br>3. Vul Roblox username + achternaam in<br>4. Betaal via Tikkie<br>5. Bekijk je order en chat privé over de levering</div>
+    </div>
+  </div>
+</div>
+
+<section class="section wrap" id="shop">
+  <h2>Shop</h2>
+  <div class="grid">
+    <div class="panel card">
+      <div class="top" style="background:radial-gradient(circle at center, rgba(255,91,69,.32), transparent 56%), linear-gradient(135deg,#3f0a0a,#180707)">
+        <div class="stock" id="stock-ghost">4 op voorraad</div>
+        <div class="seed ghost"></div>
+      </div>
+      <div class="small muted">Grow a Garden 2</div>
+      <h3>Ghost Pepper Seed</h3>
+      <div class="muted">Rode premium seed met snelle levering.</div>
+      <div class="row" style="justify-content:space-between;margin-top:14px">
+        <div class="price">€ 0,99</div>
+        <div class="qty"><button onclick="changeQty('ghost',-1)">−</button><span id="qty-ghost">1</span><button onclick="changeQty('ghost',1)">+</button></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="btn gold" id="add-ghost" onclick="addToCart('ghost')">In winkelwagen</button></div>
+    </div>
+
+    <div class="panel card">
+      <div class="top" style="background:radial-gradient(circle at center, rgba(255,216,91,.30), transparent 56%), linear-gradient(135deg,#4b3807,#181106)">
+        <div class="stock" id="stock-gold">8 op voorraad</div>
+        <div class="seed gold"></div>
+      </div>
+      <div class="small muted">Grow a Garden 2</div>
+      <h3>Gold Seed</h3>
+      <div class="muted">Gouden seed voor goedkope extra stock.</div>
+      <div class="row" style="justify-content:space-between;margin-top:14px">
+        <div class="price">€ 0,04</div>
+        <div class="qty"><button onclick="changeQty('gold',-1)">−</button><span id="qty-gold">1</span><button onclick="changeQty('gold',1)">+</button></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="btn gold" id="add-gold" onclick="addToCart('gold')">In winkelwagen</button></div>
+    </div>
+
+    <div class="panel card">
+      <div class="top" style="background:radial-gradient(circle at center, rgba(89,255,141,.26), transparent 56%), linear-gradient(135deg,#0b2813,#07110a)">
+        <div class="stock" id="stock-bamboo">51 op voorraad</div>
+        <div class="seed bamboo"></div>
+      </div>
+      <div class="small muted">Grow a Garden 2</div>
+      <h3>Bamboo Seed</h3>
+      <div class="muted">Groene bamboo seed, veel voorraad beschikbaar.</div>
+      <div class="row" style="justify-content:space-between;margin-top:14px">
+        <div class="price">€ 0,01</div>
+        <div class="qty"><button onclick="changeQty('bamboo',-1)">−</button><span id="qty-bamboo">1</span><button onclick="changeQty('bamboo',1)">+</button></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="btn gold" id="add-bamboo" onclick="addToCart('bamboo')">In winkelwagen</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="orders">
+  <h2>Mijn orders</h2>
+  <div id="ordersBox" class="panel muted">Log in om je orders te zien.</div>
+</section>
+
+<section class="section wrap hide" id="chatSection">
+  <h2>Privé order-chat</h2>
+  <div class="panel">
+    <div class="chat-box" id="chatBox"></div>
+    <div class="row" style="margin-top:12px">
+      <input id="chatInput" placeholder="Typ je bericht en druk Enter..." />
+      <button class="btn gold" onclick="sendMessage()">Verstuur</button>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="contact">
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div>GAGxSALES 2026</div>
+      <div class="row">
+        <a href="https://snapchat.com/add/oncexslaes1" target="_blank" style="color:#fff;text-decoration:none">Snapchat</a>
+        <a href="https://discord.gg/rz2BjUqb2c" target="_blank" style="color:#fff;text-decoration:none">Discord</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap hide" id="ownerPanel">
+  <div class="panel">
+    <h2>Owner panel</h2>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
+      <div class="panel">
+        <h3>Shop status</h3>
+        <div class="muted">Zet de shop live online of offline voor klanten.</div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn gold" id="toggleStatusBtn" onclick="toggleOnline()">Zet offline</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Voorraad aanpassen</h3>
+        <label>Ghost Pepper Seed<input id="stockInputGhost" type="number" min="0" /></label>
+        <label>Gold Seed<input id="stockInputGold" type="number" min="0" /></label>
+        <label>Bamboo Seed<input id="stockInputBamboo" type="number" min="0" /></label>
+        <button class="btn gold" onclick="saveStock()">Voorraad opslaan</button>
+      </div>
+    </div>
+    <hr>
+    <h3>Alle orders</h3>
+    <div id="ownerOrders" class="muted">Nog geen orders.</div>
+  </div>
+</section>
+
+<div class="auth-backdrop" id="authModal">
+  <div class="modal">
+    <div class="row" style="justify-content:space-between"><h2 style="margin:0">Inloggen</h2><button class="btn dark" onclick="closeAuth()">Sluiten</button></div>
+    <div class="muted" style="margin:8px 0 14px">Log in met je e-mail. Orders, winkelwagen en chat worden per e-mail opgeslagen op deze site.</div>
+    <label>E-mail<input id="loginEmail" type="email" placeholder="jij@email.com" /></label>
+    <button class="btn gold" onclick="login()">Doorgaan</button>
+  </div>
+</div>
+
+<div class="cart-side" id="cartSide">
+  <div class="row" style="justify-content:space-between"><h2 style="margin:0">Winkelwagen</h2><button class="btn dark" onclick="closeCart()">Sluiten</button></div>
+  <div id="cartItems" style="margin-top:14px"></div>
+  <div id="cartFooter" class="hide">
+    <hr>
+    <div class="row" style="justify-content:space-between"><strong>Totaal</strong><strong id="cartTotal">€ 0,00</strong></div>
+    <div class="row" style="margin-top:14px"><button class="btn gold" onclick="openCheckout()">Afrekenen</button></div>
+  </div>
+</div>
+
+<div class="checkout-backdrop" id="checkoutModal">
+  <div class="modal">
+    <div class="row" style="justify-content:space-between"><h2 style="margin:0">Checkout</h2><button class="btn dark" onclick="closeCheckout()">Sluiten</button></div>
+    <div id="checkoutSummary" style="margin-top:14px"></div>
+    <label>Roblox username<input id="checkoutRoblox" /></label>
+    <label>Achternaam<input id="checkoutLast" /></label>
+    <div class="row" style="justify-content:space-between;margin:10px 0 14px"><strong>Totaal</strong><strong id="checkoutTotal">€ 0,00</strong></div>
+    <button class="btn gold" onclick="placeOrder()">Bestellen & betalen</button>
+  </div>
+</div>
+
+<div class="notice" id="notice"></div>
+
+<script>
+const OWNER_EMAIL = "denzelprins29@gmail.com";
+const TIKKIE_LINK = "https://tikkie.me/pay/u87eq681egq8c9l0m25l";
+const STORAGE_KEY = "gagxsales_v9";
+
+const state = {
+  online: true,
+  currentUser: null,
+  activeOrderId: null,
+  products: {
+    ghost: { name: "Ghost Pepper Seed", price: 0.99, stock: 4, qtyPick: 1 },
+    gold: { name: "Gold Seed", price: 0.04, stock: 8, qtyPick: 1 },
+    bamboo: { name: "Bamboo Seed", price: 0.01, stock: 51, qtyPick: 1 }
+  },
+  carts: {},
+  orders: []
+};
+
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function loadState(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw) return;
+  try{
+    const data = JSON.parse(raw);
+    if(data && typeof data === "object"){
+      Object.assign(state, data);
+      state.products = Object.assign(state.products, data.products || {});
+      state.carts = data.carts || {};
+      state.orders = data.orders || [];
+    }
+  }catch(e){}
+}
+function euro(v){ return "€ " + Number(v).toFixed(2).replace(".", ","); }
+function notice(t){
+  const n = document.getElementById("notice");
+  n.textContent = t; n.style.display = "block";
+  setTimeout(()=> n.style.display = "none", 1800);
+}
+function scrollToId(id){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); }
+function isOwner(){ return state.currentUser && state.currentUser.email.toLowerCase() === OWNER_EMAIL.toLowerCase(); }
+function getCart(){
+  if(!state.currentUser) return [];
+  return state.carts[state.currentUser.email] || [];
+}
+function setCart(cart){
+  if(!state.currentUser) return;
+  state.carts[state.currentUser.email] = cart;
+  saveState(); updateUI();
+}
+function updateStatusUI(){
+  const online = state.online;
+  const pill = document.getElementById("statusPill");
+  pill.className = "pill " + (online ? "online-pill" : "offline-pill");
+  document.getElementById("statusPillText").textContent = online ? "🟢 ONLINE" : "🔴 OFFLINE";
+  document.getElementById("statusBannerText").innerHTML = online
+    ? 'De shop staat nu <strong>online</strong>. Je kunt bestellen via de winkelwagen en daarna betalen met Tikkie.'
+    : 'De shop staat nu <strong>offline</strong>. Klanten kunnen tijdelijk niet bestellen.';
+  const btn = document.getElementById("toggleStatusBtn");
+  if(btn) btn.textContent = online ? "Zet offline" : "Zet online";
+}
+function updateStockUI(){
+  ["ghost","gold","bamboo"].forEach(key=>{
+    const p = state.products[key];
+    const badge = document.getElementById("stock-" + key);
+    const addBtn = document.getElementById("add-" + key);
+    badge.textContent = p.stock > 0 ? `${p.stock} op voorraad` : "Uitverkocht";
+    if(addBtn){
+      addBtn.disabled = (!state.online || p.stock <= 0);
+      addBtn.textContent = p.stock <= 0 ? "Uitverkocht" : "In winkelwagen";
+    }
+    const qty = document.getElementById("qty-" + key);
+    if(qty) qty.textContent = p.qtyPick;
+  });
+  const g = document.getElementById("stockInputGhost"); if(g) g.value = state.products.ghost.stock;
+  const o = document.getElementById("stockInputGold"); if(o) o.value = state.products.gold.stock;
+  const b = document.getElementById("stockInputBamboo"); if(b) b.value = state.products.bamboo.stock;
+}
+function updateAuthUI(){
+  const loggedIn = !!state.currentUser;
+  document.getElementById("loginBtn").classList.toggle("hide", loggedIn);
+  document.getElementById("logoutBtn").classList.toggle("hide", !loggedIn);
+  document.getElementById("ownerBtn").classList.toggle("hide", !isOwner());
+  if(!isOwner()) document.getElementById("ownerPanel").classList.add("hide");
+}
+function updateCartCount(){
+  const count = getCart().reduce((sum,item)=>sum + item.qty, 0);
+  document.getElementById("cartCount").textContent = count;
+}
+function updateUI(){
+  updateStatusUI();
+  updateStockUI();
+  updateAuthUI();
+  updateCartCount();
+  renderOrders();
+  renderOwnerOrders();
+  renderChat();
+}
+function changeQty(key, delta){
+  const p = state.products[key];
+  p.qtyPick = Math.max(1, p.qtyPick + delta);
+  saveState(); updateUI();
+}
+function addToCart(key){
+  if(!state.online) return notice("Shop staat offline");
+  if(!state.currentUser) return openAuth();
+  const p = state.products[key];
+  if(p.stock <= 0) return notice("Uitverkocht");
+  const cart = [...getCart()];
+  const found = cart.find(i => i.key === key);
+  const newQty = (found ? found.qty : 0) + p.qtyPick;
+  if(newQty > p.stock) return notice("Niet genoeg voorraad");
+  if(found) found.qty += p.qtyPick;
+  else cart.push({ key, name:p.name, price:p.price, qty:p.qtyPick });
+  setCart(cart);
+  renderCart();
+  notice(p.name + " toegevoegd");
+}
+function openAuth(){ document.getElementById("authModal").style.display = "flex"; }
+function closeAuth(){ document.getElementById("authModal").style.display = "none"; }
+function login(){
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  if(!email) return notice("Vul je e-mail in");
+  state.currentUser = { email };
+  saveState(); closeAuth(); updateUI();
+  notice("Ingelogd als " + email);
+}
+function logout(){
+  state.currentUser = null;
+  state.activeOrderId = null;
+  saveState(); updateUI(); closeCart(); closeCheckout();
+  notice("Uitgelogd");
+}
+function openCart(){
+  if(!state.currentUser) return openAuth();
+  renderCart();
+  document.getElementById("cartSide").classList.add("open");
+}
+function closeCart(){ document.getElementById("cartSide").classList.remove("open"); }
+function renderCart(){
+  const cart = getCart();
+  const box = document.getElementById("cartItems");
+  const footer = document.getElementById("cartFooter");
+  if(!cart.length){
+    box.innerHTML = '<div class="list-card muted">Je winkelwagen is leeg.</div>';
+    footer.classList.add("hide");
+    return;
+  }
+  box.innerHTML = cart.map(item => `
+    <div class="checkout-item">
+      <div class="row" style="justify-content:space-between">
+        <strong>${item.name}</strong>
+        <button class="btn dark" onclick="removeCartItem('${item.key}')">Verwijderen</button>
+      </div>
+      <div class="row" style="justify-content:space-between;margin-top:10px">
+        <span class="muted">Aantal</span>
+        <div class="qty">
+          <button onclick="changeCartQty('${item.key}',-1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeCartQty('${item.key}',1)">+</button>
+        </div>
+      </div>
+      <div class="row" style="justify-content:space-between;margin-top:10px">
+        <span class="muted">Subtotaal</span>
+        <strong>${euro(item.qty * item.price)}</strong>
+      </div>
+    </div>
+  `).join("");
+  document.getElementById("cartTotal").textContent = euro(cart.reduce((s,i)=>s + i.qty*i.price, 0));
+  footer.classList.remove("hide");
+}
+function changeCartQty(key, delta){
+  const cart = [...getCart()];
+  const item = cart.find(i => i.key === key);
+  if(!item) return;
+  const max = state.products[key].stock;
+  item.qty = Math.max(1, item.qty + delta);
+  if(item.qty > max) item.qty = max;
+  setCart(cart); renderCart();
+}
+function removeCartItem(key){
+  setCart(getCart().filter(i => i.key !== key));
+  renderCart();
+}
+function openCheckout(){
+  if(!state.online) return notice("Shop staat offline");
+  const cart = getCart();
+  if(!cart.length) return notice("Winkelwagen is leeg");
+  const sum = document.getElementById("checkoutSummary");
+  sum.innerHTML = cart.map(item => `
+    <div class="checkout-item">
+      <div class="row" style="justify-content:space-between">
+        <span>${item.name} <span class="muted">(${item.qty}x)</span></span>
+        <strong>${euro(item.qty * item.price)}</strong>
+      </div>
+    </div>
+  `).join("");
+  document.getElementById("checkoutTotal").textContent = euro(cart.reduce((s,i)=>s + i.qty*i.price, 0));
+  document.getElementById("checkoutModal").style.display = "flex";
+}
+function closeCheckout(){ document.getElementById("checkoutModal").style.display = "none"; }
+function placeOrder(){
+  const roblox = document.getElementById("checkoutRoblox").value.trim();
+  const last = document.getElementById("checkoutLast").value.trim();
+  const cart = getCart();
+  if(!roblox || !last) return notice("Vul Roblox username en achternaam in");
+  if(!cart.length) return notice("Winkelwagen is leeg");
+  for(const item of cart){
+    const p = state.products[item.key];
+    if(item.qty > p.stock) return notice("Niet genoeg voorraad voor " + p.name);
+  }
+  cart.forEach(item => state.products[item.key].stock = Math.max(0, state.products[item.key].stock - item.qty));
+  const order = {
+    id: "GAG-" + Math.floor(Math.random()*900000 + 100000),
+    email: state.currentUser.email,
+    roblox,
+    last,
+    items: JSON.parse(JSON.stringify(cart)),
+    total: cart.reduce((s,i)=>s + i.qty*i.price, 0),
+    payment: "Open",
+    status: "Wacht op levering",
+    created: new Date().toLocaleString("nl-NL"),
+    messages: [{ role:"admin", text:"Welkom! Je order is ontvangen. We regelen de levering hier in de chat." }]
+  };
+  state.orders.unshift(order);
+  state.activeOrderId = order.id;
+  state.carts[state.currentUser.email] = [];
+  saveState(); updateUI(); closeCheckout(); closeCart();
+  window.open(TIKKIE_LINK, "_blank");
+  notice("Order geplaatst");
+  scrollToId("orders");
+}
+function renderOrders(){
+  const box = document.getElementById("ordersBox");
+  if(!state.currentUser){
+    box.innerHTML = '<div class="muted">Log in om je orders te zien.</div>';
+    return;
+  }
+  const mine = state.orders.filter(o => o.email === state.currentUser.email);
+  if(!mine.length){
+    box.innerHTML = '<div class="muted">Nog geen orders geplaatst.</div>';
+    return;
+  }
+  box.innerHTML = mine.map(o => `
+    <div class="order-card">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div style="font-size:1.1rem;font-weight:900">${o.id}</div>
+          <div class="small muted">${o.created}</div>
+        </div>
+        <button class="btn dark" onclick="openOrder('${o.id}')">Open chat</button>
+      </div>
+      <div class="muted" style="margin-top:10px">${o.items.map(i => `${i.name} (${i.qty}x)`).join(", ")}</div>
+      <div class="row" style="justify-content:space-between;margin-top:10px"><span class="muted">Betaling</span><strong>${o.payment}</strong></div>
+      <div class="row" style="justify-content:space-between;margin-top:8px"><span class="muted">Status</span><strong>${o.status}</strong></div>
+      <div class="row" style="justify-content:space-between;margin-top:8px"><span class="muted">Totaal</span><strong>${euro(o.total)}</strong></div>
+    </div>
+  `).join("");
+}
+function openOrder(id){
+  state.activeOrderId = id;
+  saveState(); renderChat(); scrollToId("chatSection");
+}
+function renderChat(){
+  const section = document.getElementById("chatSection");
+  if(!state.currentUser || !state.activeOrderId){ section.classList.add("hide"); return; }
+  const order = state.orders.find(o => o.id === state.activeOrderId && o.email === state.currentUser.email);
+  if(!order){ section.classList.add("hide"); return; }
+  section.classList.remove("hide");
+  document.getElementById("chatBox").innerHTML = order.messages.map(m => `<div class="msg ${m.role==='me'?'me':'admin'}">${m.text}</div>`).join("");
+}
+function sendMessage(){
+  if(!state.currentUser || !state.activeOrderId) return;
+  const order = state.orders.find(o => o.id === state.activeOrderId && o.email === state.currentUser.email);
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+  if(!order || !text) return;
+  order.messages.push({ role:"me", text });
+  input.value = "";
+  saveState(); renderChat(); renderOwnerOrders();
+}
+function toggleOwnerPanel(){
+  if(!isOwner()) return;
+  document.getElementById("ownerPanel").classList.toggle("hide");
+  scrollToId("ownerPanel");
+}
+function toggleOnline(){
+  state.online = !state.online;
+  saveState(); updateUI();
+}
+function saveStock(){
+  state.products.ghost.stock = Math.max(0, Number(document.getElementById("stockInputGhost").value || 0));
+  state.products.gold.stock = Math.max(0, Number(document.getElementById("stockInputGold").value || 0));
+  state.products.bamboo.stock = Math.max(0, Number(document.getElementById("stockInputBamboo").value || 0));
+  saveState(); updateUI(); notice("Voorraad opgeslagen");
+}
+function markPaid(id){
+  const o = state.orders.find(x => x.id === id);
+  if(!o) return;
+  o.payment = o.payment === "Betaald" ? "Open" : "Betaald";
+  saveState(); updateUI();
+}
+function cycleStatus(id){
+  const o = state.orders.find(x => x.id === id);
+  if(!o) return;
+  const statuses = ["Wacht op levering","Bezig","Geleverd"];
+  const idx = statuses.indexOf(o.status);
+  o.status = statuses[(idx + 1) % statuses.length];
+  saveState(); updateUI();
+}
+function renderOwnerOrders(){
+  const box = document.getElementById("ownerOrders");
+  if(!isOwner()){
+    box.innerHTML = "Nog geen orders.";
+    return;
+  }
+  if(!state.orders.length){
+    box.innerHTML = '<div class="muted">Nog geen orders.</div>';
+    return;
+  }
+  box.innerHTML = state.orders.map(o => `
+    <div class="order-card">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div style="font-weight:900">${o.id}</div>
+          <div class="small muted">${o.email} • ${o.roblox}</div>
+        </div>
+        <div class="row">
+          <button class="btn dark" onclick="markPaid('${o.id}')">${o.payment === 'Betaald' ? 'Zet open' : 'Markeer betaald'}</button>
+          <button class="btn gold" onclick="cycleStatus('${o.id}')">Status wisselen</button>
+        </div>
+      </div>
+      <div class="muted" style="margin-top:10px">${o.items.map(i => `${i.name} (${i.qty}x)`).join(", ")}</div>
+      <div class="row" style="justify-content:space-between;margin-top:10px"><span class="muted">Achternaam</span><strong>${o.last}</strong></div>
+      <div class="row" style="justify-content:space-between;margin-top:8px"><span class="muted">Betaling</span><strong>${o.payment}</strong></div>
+      <div class="row" style="justify-content:space-between;margin-top:8px"><span class="muted">Status</span><strong>${o.status}</strong></div>
+      <div class="row" style="justify-content:space-between;margin-top:8px"><span class="muted">Totaal</span><strong>${euro(o.total)}</strong></div>
+    </div>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadState();
+  updateUI();
+  document.getElementById("chatInput").addEventListener("keydown", e => {
+    if(e.key === "Enter" && !e.shiftKey){
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  document.getElementById("authModal").addEventListener("click", e => { if(e.target.id === "authModal") closeAuth(); });
+  document.getElementById("checkoutModal").addEventListener("click", e => { if(e.target.id === "checkoutModal") closeCheckout(); });
+});
+</script>
+</body>
+</html>
